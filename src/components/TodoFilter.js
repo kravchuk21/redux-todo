@@ -1,22 +1,23 @@
 import React from 'react';
 import {Tabs} from 'antd';
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {SET_FILTER} from "../store/actions";
 
 const {TabPane} = Tabs;
 
-const TodoFilter = ({filter, changeFilter, filterItems}) => (
-    <Tabs defaultActiveKey={filter} centered onChange={key => changeFilter(key)}>
-        {filterItems.map(({tab, key}) => <TabPane tab={tab} key={key}/>)}
-    </Tabs>
-);
+export const TodoFilter = () => {
+    const dispatch = useDispatch();
 
-const mapStateToProps = state => ({
-    filter: state.filter,
-    filterItems: state.filterItems
-});
+    const filter = useSelector(state => state.filter);
+    const filterItems = useSelector(state => state.filterItems);
 
-const mapDispatchToProps = dispatch => ({
-    changeFilter: filter => dispatch({type: "CHANGE_FILTER", payload: filter})
-});
+    const changeFilter = (key) => {
+        dispatch(SET_FILTER(key))
+    }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoFilter);
+    return (
+        <Tabs defaultActiveKey={filter} centered onChange={key => changeFilter(key)}>
+            {filterItems.map(({tab, key}) => <TabPane tab={tab} key={key}/>)}
+        </Tabs>
+    )
+};

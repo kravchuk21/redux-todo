@@ -1,0 +1,8 @@
+export const actionTypes = {
+    SET_DONE: "SET_DONE",
+    SET_IMPORTANT: "SET_IMPORTANT",
+    ADD_TODO: "ADD_TODO",
+    SET_ITEM_TEXT: "SET_ITEM_TEXT",
+    SET_FILTER: "SET_FILTER",
+    DELETE_TODO: "DELETE_TODO",
+};

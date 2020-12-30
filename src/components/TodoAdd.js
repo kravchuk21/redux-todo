@@ -1,30 +1,31 @@
 import React from 'react';
 import {Input} from 'antd';
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {ADD_TODO, SET_ITEM_TEXT} from "../store/actions";
 
 const {Search} = Input;
 
-const TodoAdd = ({data, itemText, add, changeItemText}) => (
-    <Search placeholder="input text" enterButton="Add" size="large" style={{marginTop: "1rem"}}
-            value={itemText}
-            onSearch={(value) => {
-                if (itemText) {
-                    add({id: data.length + 1, text: value, done: false})
-                    changeItemText("")
-                }
-            }}
-            onChange={(e) => changeItemText(e.target.value)}
-    />
-);
+export const TodoAdd = () => {
+    const dispatch = useDispatch();
 
-const mapStateToProps = state => ({
-    data: state.todos,
-    itemText: state.itemText,
-})
+    const itemText = useSelector(state => state.itemText);
 
-const mapDispatchToProps = dispatch => ({
-    changeItemText: newText => dispatch({type: "CHANGE_ITEM_TEXT", payload: newText}),
-    add: item => dispatch({type: "ADD", payload: item}),
-})
+    const changeItemText = (text) => {
+        dispatch(SET_ITEM_TEXT(text));
+    };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoAdd);
+    const handleSearch = (value) => {
+        if (itemText) {
+            dispatch(ADD_TODO(value));
+            changeItemText("");
+        }
+    };
+
+    return (
+        <Search placeholder="input text" enterButton="Add" size="large" style={{marginTop: "1rem"}}
+                value={itemText}
+                onSearch={value => handleSearch(value)}
+                onChange={e => changeItemText(e.target.value)}
+        />
+    )
+};

@@ -15,14 +15,32 @@ code {
 }
 
 .App {
-    width: 500px;
+    max-width: 520px;
+    width: 100%;
     margin-top: 5rem;
+    padding: 5px;
 }
 
 .listItem {
     justify-content: space-between;
 }
 
+.todoListItemBody {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.todoListItemButtons {
+    display: flex;
+    padding-left: 10px;
+}
+
 .listItem:hover {
     border-left: 4px solid pink;
+}
+
+.date {
+    font-style: italic;
+    color: gray;
 }
